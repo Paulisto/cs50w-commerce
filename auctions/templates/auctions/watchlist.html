@@ -1,0 +1,52 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %} Watchlist {% endblock %}
+{% block body %}
+    <h2 class="text-center title">Watchlist</h2>
+
+    <div class="container-fluid">
+        
+        {% for item in watchlist %}
+            <a href="{% url 'listing' item.id %}" class="text-decoration-none text-dark">
+                <div class="row mb-3 watchlist border-bottom mx-auto">
+                    <div class="media mb-3">
+                        <div class="d-flex flex-column">
+                            {% if item.active == True %}
+                                <span class="badge badge-success mb-1">Active</span>
+                            {% else %}
+                                <span class="badge badge-danger mb-1">Finished</span>
+                            {% endif %}
+                                <img src="{% if item.listing_image %}{{ item.listing_image }}{% else %}https://static.thenounproject.com/png/5102353-200.png{% endif %}" class="mr-3 rounded" alt="Photo of {{ listing.listing_name}}">
+                        </div>
+                        <div class="media-body ml-4 my-auto">
+                            <h5><small class="mt-0 mr-3"><strong>{{item.listing_name}}</strong></small></h5>
+                            <small>
+                                {% if item.active == True %}
+                                    Current price UGX{{item.current_price}}
+                                    {% if item.current_winner == user %}
+                                        <br>You are winning this auction
+                                    {% endif %}
+                                {% else %}
+                                    {% if item.current_winner == user %}
+                                        Congratulations, you won this auction!!! 
+                                {% else %}
+                                    {{item.current_winner}} won this auction.
+                                {% endif %}
+                            {% endif %}
+                            </small>
+                            <form action="{% url 'watchlist_remove' item.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="submit" class="btn btn-sm btn-primary mt-2" value="Remove">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            </a>
+        {% empty %}
+        You have no items in your watchlist.
+        {% endfor %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}Log in!!!{% endblock %}
+
+{% block body %}
+
+    {% include "auctions/include/messages.html" %}
+    <section>
+        <div class="container-fluid h-custom pt-lg-5">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+                <img src="static/hammer.png" class="img-fluid" alt="Bid hammer image">
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 ml-1">
+                <h2 class="title">Log in!!!</h2>
+                <form action="{% url 'login' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input autofocus class="form-control" type="text" name="username" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="password" name="password" placeholder="Password">
+                    </div>
+                    <input class="btn btn-primary" type="submit" value="Login">
+                </form>
+            
+                Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+            </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    
+
+{% endblock %}
